@@ -1,0 +1,13 @@
+C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\Ed_FInsOmron.exe
+C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.csprojAssemblyReference.cache
+C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.AssemblyInfoInputs.cache
+C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.AssemblyInfo.cs
+C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\Ed_FInsOmron.deps.json
+C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\Ed_FInsOmron.runtimeconfig.json
+C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\Ed_FInsOmron.runtimeconfig.dev.json
+C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\Ed_FInsOmron.dll
+C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\Ed_FInsOmron.pdb
+C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\OmronFinsUDP.Net.dll
+C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.csproj.CopyComplete
+C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.dll
+C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.pdb
