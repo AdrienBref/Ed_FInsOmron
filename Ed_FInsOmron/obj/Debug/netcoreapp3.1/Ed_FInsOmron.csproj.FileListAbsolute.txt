@@ -11,3 +11,16 @@ C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\
 C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.csproj.CopyComplete
 C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.dll
 C:\Users\Usuario\Desktop\Code\Ed_FInsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.pdb
+C:\code\github.com\AdrienBref\Ed_FinsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\Ed_FInsOmron.exe
+C:\code\github.com\AdrienBref\Ed_FinsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\Ed_FInsOmron.deps.json
+C:\code\github.com\AdrienBref\Ed_FinsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\Ed_FInsOmron.runtimeconfig.json
+C:\code\github.com\AdrienBref\Ed_FinsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\Ed_FInsOmron.runtimeconfig.dev.json
+C:\code\github.com\AdrienBref\Ed_FinsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\Ed_FInsOmron.dll
+C:\code\github.com\AdrienBref\Ed_FinsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\Ed_FInsOmron.pdb
+C:\code\github.com\AdrienBref\Ed_FinsOmron\Ed_FInsOmron\bin\Debug\netcoreapp3.1\OmronFinsUDP.Net.dll
+C:\code\github.com\AdrienBref\Ed_FinsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.csprojAssemblyReference.cache
+C:\code\github.com\AdrienBref\Ed_FinsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.AssemblyInfoInputs.cache
+C:\code\github.com\AdrienBref\Ed_FinsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.AssemblyInfo.cs
+C:\code\github.com\AdrienBref\Ed_FinsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.csproj.CopyComplete
+C:\code\github.com\AdrienBref\Ed_FinsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.dll
+C:\code\github.com\AdrienBref\Ed_FinsOmron\Ed_FInsOmron\obj\Debug\netcoreapp3.1\Ed_FInsOmron.pdb

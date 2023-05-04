@@ -10,6 +10,7 @@ namespace Ed_FInsOmron
     {
         static void Main(string[] args)
         {
+            //PRueba
 
             IPAddress ipAddressPlc1 = IPAddress.Parse("192.168.250.50"), ipAdrresPlc2 = IPAddress.Parse("192.168.250.56");
             int portPlc1 = 9600, portPlc2 = 9500;
@@ -77,8 +78,8 @@ namespace Ed_FInsOmron
                 } 
                 if (dataWorkCh2[0] == 1) 
                 {
-                    readData = conPlc1.ReadData(1414, 68);
-                    conPlc1.WriteWork(52, clean);
+                    readData = conPlc1.ReadData(1050, 68);
+                    conPlc1.WriteWork(101, clean);
 ;                   for(int i = 0; i < 68; i++) {
                         dataReceived = dataReceived +  Convert.ToString(readData[i],16);
                     }

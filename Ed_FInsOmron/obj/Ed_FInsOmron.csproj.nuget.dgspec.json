@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\Desktop\\Code\\Ed_FInsOmron\\Ed_FInsOmron\\Ed_FInsOmron.csproj": {}
+    "C:\\code\\github.com\\AdrienBref\\Ed_FinsOmron\\Ed_FInsOmron\\Ed_FInsOmron.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\Desktop\\Code\\Ed_FInsOmron\\Ed_FInsOmron\\Ed_FInsOmron.csproj": {
+    "C:\\code\\github.com\\AdrienBref\\Ed_FinsOmron\\Ed_FInsOmron\\Ed_FInsOmron.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\Code\\Ed_FInsOmron\\Ed_FInsOmron\\Ed_FInsOmron.csproj",
+        "projectUniqueName": "C:\\code\\github.com\\AdrienBref\\Ed_FinsOmron\\Ed_FInsOmron\\Ed_FInsOmron.csproj",
         "projectName": "Ed_FInsOmron",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\Code\\Ed_FInsOmron\\Ed_FInsOmron\\Ed_FInsOmron.csproj",
+        "projectPath": "C:\\code\\github.com\\AdrienBref\\Ed_FinsOmron\\Ed_FInsOmron\\Ed_FInsOmron.csproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\Code\\Ed_FInsOmron\\Ed_FInsOmron\\obj\\",
+        "outputPath": "C:\\code\\github.com\\AdrienBref\\Ed_FinsOmron\\Ed_FInsOmron\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
