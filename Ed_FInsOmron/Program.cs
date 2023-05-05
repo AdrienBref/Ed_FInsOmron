@@ -3,6 +3,8 @@ using System.IO;
 using System.Net;
 using System.Timers;
 using CableRobot.Fins;
+using NPOI.XSSF.UserModel;
+using NPOI.SS.UserModel;
 
 namespace Ed_FInsOmron
 {
@@ -23,13 +25,20 @@ namespace Ed_FInsOmron
 
             String loggingNormon = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/LoggingNormon.xlsx";
             
-            
-
             FinsClient conPlc1 = new FinsClient(endPointPlc1);
             Console.WriteLine("Plc1 Conectado");
 
             //FinsClient conPlc2 = new FinsClient(endPointPlc2);
             //Console.WriteLine("Plc2 Conectado");
+
+            XSSFWorkbook LogNormon;
+
+            using (FileStream file = new FileStream(loggingNormon, FileMode.Open, FileAccess.Read))
+            {
+                LogNormon = new XSSFWorkbook(file);
+            }
+
+            ISheet sheet = LogNormon.GetSheetAt(0);
 
             double ScanCycle = 200;
 
@@ -47,6 +56,8 @@ namespace Ed_FInsOmron
 
             String dataSended = "";
             String dataReceived = "";
+
+            int filaTabla1 = 3, filaTabla2 = 3, filaTabla3 = 3;
 
             Timer timer = new Timer(ScanCycle);
             timer.Elapsed += (sender, e) =>
@@ -123,6 +134,28 @@ namespace Ed_FInsOmron
                     Console.WriteLine("Hojas totales: " + hojasTotales);
                     Console.WriteLine("Numero máquina: " + numeroMaquina);
 
+                    
+                    IRow row = sheet.GetRow(filaTabla1) ?? sheet.CreateRow(filaTabla1);
+                    ICell codigoCajaCell = row.GetCell(1) ?? row.CreateCell(1);
+                    ICell hojasTotalesCell= row.GetCell(2) ?? row.CreateCell(2);
+                    ICell hojasALeerCell = row.GetCell(3) ?? row.CreateCell(3);
+                    ICell numMaqCell= row.GetCell(4) ?? row.CreateCell(4);
+                    ICell tramaOriginalC= row.GetCell(5) ?? row.CreateCell(5);
+
+                    codigoCajaCell.SetCellValue(bulto);
+                    hojasTotalesCell.SetCellValue(hojasTotales);
+                    hojasALeerCell.SetCellValue(hojasALeer);
+                    numMaqCell.SetCellValue(numeroMaquina);
+                    tramaOriginalC.SetCellValue(completeStream);
+
+                    
+
+                    using (FileStream file = new FileStream(loggingNormon, FileMode.Create, FileAccess.Write))
+                    {
+                        LogNormon.Write(file);
+                        filaTabla1++;
+                    }
+
                     using (StreamWriter writer = File.AppendText(receivedDatRouteLog))
                     {
                         writer.WriteLine("[LOG]>> [" + horaActual +"] Trama recibida al plc: " + dataReceived);
@@ -131,6 +164,10 @@ namespace Ed_FInsOmron
                     Console.WriteLine("Cubeta Enviada por Cofares: " + completeStream);
                     dataReceived = "";
                     completeStream = "";
+                    bulto = "";
+                    hojasALeer = "";
+                    hojasTotales = "";
+                    numeroMaquina = "";
                 }
                 if(dataWorkCh3[0] == 1) 
                 {
