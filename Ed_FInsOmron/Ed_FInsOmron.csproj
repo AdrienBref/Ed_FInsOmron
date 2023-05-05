@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NPOI" Version="2.6.0" />
     <PackageReference Include="OmronFinsUDP.Net" Version="1.0.0" />
   </ItemGroup>
 
