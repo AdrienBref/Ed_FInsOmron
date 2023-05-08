@@ -5,7 +5,7 @@ using System.Timers;
 using CableRobot.Fins;
 using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
-using Plc;
+using Ed_FInsOmron.Excel;
 
 namespace Ed_FInsOmron
 {
@@ -14,17 +14,20 @@ namespace Ed_FInsOmron
         static void Main(string[] args)
         {
 
-            Plc.Plc conPlc1 = new Plc.Plc("10.50.10.106", 9600);
-            Plc.Plc conPlc2 = new Plc.Plc("10.50.10.140", 9600);
+            Plc conPlc1 = new Plc("10.50.10.106", 9600);
+            Plc conPlc2 = new Plc("10.50.10.140", 9600);
 
             conPlc1.connect();
             conPlc2.connect();
+
+
 
             String sendedDatRouteLogAlb1 = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/SendedDataAlb1.txt";
             String sendedDatRouteLogAlb2 = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/SendedDataAlb2.txt";
             String receivedDatRouteLog = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/ReceivedData.txt";
 
             String loggingNormon = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/LoggingNormon.xlsx";
+            IExcelManager excelManager = new ExcelManager(loggingNormon);
 
             XSSFWorkbook LogNormon;
 
@@ -42,6 +45,7 @@ namespace Ed_FInsOmron
             UInt16[] dataWorkCh2 = new UInt16[30];
             UInt16[] dataWorkCh3 = new UInt16[30];
             UInt16[] dataWorkCh4 = new UInt16[30];
+            String[] streamPackage = new String[4];
             ushort[] clean = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             String completeStream = "";
             String bulto = "";
@@ -66,15 +70,14 @@ namespace Ed_FInsOmron
                 dataWorkCh3 = conPlc2.read("w",100,16);
                 dataWorkCh4 = conPlc2.read("w",101,16);
 
-
-
                 if (dataWorkCh1[0] == 1)
                 {
                     readData = conPlc1.read("d",1000,20);
-                    conPlc1.WriteWork(100, clean);
+                    conPlc1.write("w",100, clean);
                     for(int i = 0; i < 20; i++) {
                         dataSended = dataSended +  Convert.ToString(readData[i],16);
                     }
+
                     for (int i = 4; i <= 14; i++)
                     {
                         if (i % 2 == 0)
@@ -93,8 +96,8 @@ namespace Ed_FInsOmron
                 } 
                 if (dataWorkCh2[0] == 1) 
                 {
-                    readData = conPlc1.ReadData(1050, 68);
-                    conPlc1.WriteWork(101, clean);
+                    readData = conPlc1.read("d", 1050, 68);
+                    conPlc1.write("w", 101, clean);
 ;                   for(int i = 0; i < 68; i++) {
                         dataReceived = dataReceived +  Convert.ToString(readData[i],16);
                     }
@@ -112,17 +115,21 @@ namespace Ed_FInsOmron
                         if(i < 18)
                         {
                             bulto = bulto + completeStream[i];
+                            streamPackage[0] = bulto;
                         } else if (i == 19 && i < 20)
                         {
                             hojasALeer = hojasALeer + completeStream[i];
+                            streamPackage[1] = hojasALeer;
                        
                         } else if (i == 21 && i < 22)
                         {
                             hojasTotales = hojasTotales + completeStream[i];
+                            streamPackage[2] = hojasALeer;
                         }
                         else if (i == 23 && i < 24)
                         {
                             numeroMaquina = numeroMaquina + completeStream[i];
+                            streamPackage[3] = numeroMaquina;
 
                         } 
                     }
@@ -167,8 +174,8 @@ namespace Ed_FInsOmron
                 }
                 if(dataWorkCh3[0] == 1) 
                 {
-                    readData = conPlc2.ReadData(1000,20);
-                    conPlc2.WriteWork(100, clean);
+                    readData = conPlc2.read("d",1000,20);
+                    conPlc2.write("w",100, clean);
 
                     for (int i = 0; i < 20; i++)
                     {

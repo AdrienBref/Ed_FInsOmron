@@ -3,8 +3,7 @@ using System.Net;
 using System.IO;
 using CableRobot.Fins;
 
-namespace Plc
-{
+
     class Plc
     {
         String Ip = "";
@@ -35,8 +34,7 @@ namespace Plc
         /// <param name="area">"w" to read w Area. "d" to read DM area.</param>
         /// <param name="startMemory">The method star to read in this number of area selected</param>
         /// <param name="bitsToRead">Quantity of bits want to read</param>
-        /// <param name="hostArray">the container of the result data</param>
-        /// <returns>El área del triángulo.</returns>
+        /// <returns>An Aray Uint16[] filled of data from the Plc.</returns>
         public UInt16[] read(String area, ushort startMemory, ushort bitsToRead)
         {
             UInt16[] hostArray = new UInt16[bitsToRead];
@@ -53,6 +51,22 @@ namespace Plc
 
         }
 
+        /// <summary>
+        /// Read the specified Area starting at specified Memory of the plc.
+        /// </summary>
+        /// <param name="area">"w" to read w Area. "d" to read DM area.</param>
+        /// <param name="startMemory">The method star to read in this number of area selected</param>
+        /// <param name="dataToWrite">Data that will send to Plc</param>
+        public void  write(String area, ushort startMemory, ushort[] dataToWrite)
+        {
+            if(area.Equals("w")) {
+
+                conPlc.WriteWork(startMemory, dataToWrite);
+            } else if (area.Equals("d"))
+            {
+                conPlc.WriteData(startMemory, dataToWrite);
+            }
+        }
+
 
     }
-}
