@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Ed_FInsOmron",
-    "\\Ed_FInsOmron\\resources"
+    "\\Ed_FInsOmron"
   ],
-  "SelectedNode": "\\Ed_FInsOmron.sln",
+  "SelectedNode": "\\Ed_FInsOmron\\Program.cs",
   "PreviewInSolutionExplorer": false
 }

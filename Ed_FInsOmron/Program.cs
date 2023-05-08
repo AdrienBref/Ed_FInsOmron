@@ -5,6 +5,7 @@ using System.Timers;
 using CableRobot.Fins;
 using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
+using Plc;
 
 namespace Ed_FInsOmron
 {
@@ -13,22 +14,17 @@ namespace Ed_FInsOmron
         static void Main(string[] args)
         {
 
-            IPAddress ipAddressPlc1 = IPAddress.Parse("10.50.10.106"), ipAdrresPlc2 = IPAddress.Parse("10.50.10.140");
-            int portPlc1 = 9600, portPlc2 = 9600;
-            IPEndPoint endPointPlc1 = new IPEndPoint(ipAddressPlc1, portPlc1); 
-            IPEndPoint endPointPlc2 = new IPEndPoint(ipAdrresPlc2, portPlc2);
+            Plc.Plc conPlc1 = new Plc.Plc("10.50.10.106", 9600);
+            Plc.Plc conPlc2 = new Plc.Plc("10.50.10.140", 9600);
+
+            conPlc1.connect();
+            conPlc2.connect();
 
             String sendedDatRouteLogAlb1 = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/SendedDataAlb1.txt";
             String sendedDatRouteLogAlb2 = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/SendedDataAlb2.txt";
             String receivedDatRouteLog = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/ReceivedData.txt";
 
             String loggingNormon = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/LoggingNormon.xlsx";
-            
-            FinsClient conPlc1 = new FinsClient(endPointPlc1);
-            Console.WriteLine("Plc1 Conectado");
-
-            FinsClient conPlc2 = new FinsClient(endPointPlc2);
-            Console.WriteLine("Plc2 Conectado");
 
             XSSFWorkbook LogNormon;
 
@@ -65,14 +61,16 @@ namespace Ed_FInsOmron
                 DateTime horaActual = DateTime.Now;
                 TimeSpan horaActualDelDia = horaActual.TimeOfDay;
 
-                dataWorkCh1 = conPlc1.ReadWork(100,16);
-                dataWorkCh2 = conPlc1.ReadWork(101,16);
-                dataWorkCh3 = conPlc2.ReadWork(100,16);
-                dataWorkCh4 = conPlc2.ReadWork(101,16);
+                dataWorkCh1 = conPlc1.read("w",100,16);
+                dataWorkCh2 = conPlc1.read("w",101,16);
+                dataWorkCh3 = conPlc2.read("w",100,16);
+                dataWorkCh4 = conPlc2.read("w",101,16);
+
+
 
                 if (dataWorkCh1[0] == 1)
                 {
-                    readData = conPlc1.ReadData(1000,20);
+                    readData = conPlc1.read("d",1000,20);
                     conPlc1.WriteWork(100, clean);
                     for(int i = 0; i < 20; i++) {
                         dataSended = dataSended +  Convert.ToString(readData[i],16);
