@@ -1,1 +1,11 @@
 
+[LOG]>> [08/05/2023 10:47:47] Trama enviada desde el Plc Albaranadora 1: 00000000000000000000
+[LOG]>> [08/05/2023 10:47:59] Trama enviada desde el Plc Albaranadora 1: 00000000000000000000
+[LOG]>> [08/05/2023 10:48:14] Trama enviada desde el Plc Albaranadora 1: 00000000000000000000
+[LOG]>> [08/05/2023 10:49:06] Trama enviada desde el Plc Albaranadora 1: 00000000000000000000
+[LOG]>> [08/05/2023 10:50:44] Trama enviada desde el Plc Albaranadora 1: 00000000000000000000
+[LOG]>> [08/05/2023 10:59:22] Trama enviada desde el Plc Albaranadora 1: 1b231383313536363030303100000000000000
+[LOG]>> [08/05/2023 11:01:24] Trama enviada desde el Plc Albaranadora 1: 1b231383313536363030303100000000000000
+[LOG]>> [08/05/2023 11:01:28] Trama enviada desde el Plc Albaranadora 1: 1b231383313536363030303100000000000000
+[LOG]>> [08/05/2023 11:01:30] Trama enviada desde el Plc Albaranadora 1: 1b231383313536363030303100000000000000
+[LOG]>> [08/05/2023 11:21:46] Trama enviada desde el Plc Albaranadora 1: 1b231383313536363030303100000000000000

@@ -12,15 +12,14 @@ namespace Ed_FInsOmron
     {
         static void Main(string[] args)
         {
-            //PRueba
 
-            IPAddress ipAddressPlc1 = IPAddress.Parse("192.168.250.1"), ipAdrresPlc2 = IPAddress.Parse("192.168.250.56");
-            int portPlc1 = 9600, portPlc2 = 9500;
+            IPAddress ipAddressPlc1 = IPAddress.Parse("10.50.10.106"), ipAdrresPlc2 = IPAddress.Parse("10.50.10.140");
+            int portPlc1 = 9600, portPlc2 = 9600;
             IPEndPoint endPointPlc1 = new IPEndPoint(ipAddressPlc1, portPlc1); 
             IPEndPoint endPointPlc2 = new IPEndPoint(ipAdrresPlc2, portPlc2);
 
-            String sendedDatRouteLogAlb1 = "C:/code/github.com/AdrienBre/Ed_FinsOmron/Ed_FInsOmron/resources/SendedDataAlb1.txt";
-            String sendedDatRouteLogAlb2 = "C:/code/github.com/AdrienBre/Ed_FinsOmron/Ed_FInsOmron/resources/SendedDataAlb2.txt";
+            String sendedDatRouteLogAlb1 = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/SendedDataAlb1.txt";
+            String sendedDatRouteLogAlb2 = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/SendedDataAlb2.txt";
             String receivedDatRouteLog = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/ReceivedData.txt";
 
             String loggingNormon = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/LoggingNormon.xlsx";
@@ -28,8 +27,8 @@ namespace Ed_FInsOmron
             FinsClient conPlc1 = new FinsClient(endPointPlc1);
             Console.WriteLine("Plc1 Conectado");
 
-            //FinsClient conPlc2 = new FinsClient(endPointPlc2);
-            //Console.WriteLine("Plc2 Conectado");
+            FinsClient conPlc2 = new FinsClient(endPointPlc2);
+            Console.WriteLine("Plc2 Conectado");
 
             XSSFWorkbook LogNormon;
 
@@ -53,6 +52,7 @@ namespace Ed_FInsOmron
             String hojasALeer = "";
             String hojasTotales = "";
             String numeroMaquina = "";
+            String resultadoLectura = "";
 
             String dataSended = "";
             String dataReceived = "";
@@ -67,8 +67,8 @@ namespace Ed_FInsOmron
 
                 dataWorkCh1 = conPlc1.ReadWork(100,16);
                 dataWorkCh2 = conPlc1.ReadWork(101,16);
-                //dataWorkCh3 = conPlc2.ReadWork(100,16);
-                //dataWorkCh4 = conPlc2.ReadWork(101,16);
+                dataWorkCh3 = conPlc2.ReadWork(100,16);
+                dataWorkCh4 = conPlc2.ReadWork(101,16);
 
                 if (dataWorkCh1[0] == 1)
                 {
@@ -148,8 +148,6 @@ namespace Ed_FInsOmron
                     numMaqCell.SetCellValue(numeroMaquina);
                     tramaOriginalC.SetCellValue(completeStream);
 
-                    
-
                     using (FileStream file = new FileStream(loggingNormon, FileMode.Create, FileAccess.Write))
                     {
                         LogNormon.Write(file);
@@ -171,15 +169,54 @@ namespace Ed_FInsOmron
                 }
                 if(dataWorkCh3[0] == 1) 
                 {
-                    //readData = conPlc2.ReadData(1000,20);
-                    //conPlc2.WriteWork(100, clean);
+                    readData = conPlc2.ReadData(1000,20);
+                    conPlc2.WriteWork(100, clean);
 
                     for (int i = 0; i < 20; i++)
                     {
                         dataSended = dataSended + Convert.ToString(readData[i], 16);
                     }
+
+                    for(int i = 1; i <= 40; i++)
+                    {
+                        if(i%2 == 0) { 
+                        
+                            completeStream = completeStream + dataSended[i];
+                        }
+                    }
+
                     Console.WriteLine("Data Enviada: " + dataSended);
                     Console.WriteLine("Cubeta Enviada por Sunt: " + completeStream);
+
+                    for(int i = 0; i < completeStream.Length; i++)
+                    {
+                        if(i < 17)
+                        {
+                            bulto = bulto + completeStream[i];
+                        } else if (i == 18 && i < 20)
+                        {
+                            resultadoLectura = resultadoLectura + completeStream[i];
+                        }
+                    }
+
+                    Console.WriteLine("Bulto: " + bulto);
+                    Console.WriteLine("Resultado Lectura: " + resultadoLectura);
+
+
+                    IRow row = sheet.GetRow(filaTabla2) ?? sheet.CreateRow(filaTabla2);
+                    ICell codigoCajaCell = row.GetCell(8) ?? row.CreateCell(8);
+                    ICell resultadoLecturaCell= row.GetCell(9) ?? row.CreateCell(9);
+                    ICell tramaOriginalC= row.GetCell(10) ?? row.CreateCell(10);
+
+                    codigoCajaCell.SetCellValue(bulto);
+                    resultadoLecturaCell.SetCellValue(resultadoLectura);
+                    tramaOriginalC.SetCellValue(dataSended);
+
+                    using (FileStream file = new FileStream(loggingNormon, FileMode.Create, FileAccess.Write))
+                    {
+                        LogNormon.Write(file);
+                        filaTabla2++;
+                    }
 
                     using (StreamWriter writer = File.AppendText(sendedDatRouteLogAlb2))
                     {
