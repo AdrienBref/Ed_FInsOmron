@@ -223,6 +223,8 @@ namespace Ed_FInsOmron
                         }
                     }
 
+                    streamPackage.Add(completeStream);
+
                     Console.WriteLine("Bulto: " + bulto);
                     Console.WriteLine("Resultado Lectura: " + resultadoLectura);
 
@@ -244,8 +246,8 @@ namespace Ed_FInsOmron
                 }
                 if (dataWorkCh4[0] == 1)
                 {
-                    //readData = conPlc2.ReadData(1050, 68);
-                    //conPlc2.WriteWork(101, clean);
+                    readData = conPlc2.read("d",1050, 68);
+                    conPlc2.write("w",101, clean);
                     ; for (int i = 0; i < 68; i++)
                     {
                         dataReceived = dataReceived + Convert.ToString(readData[i], 16);
@@ -270,7 +272,7 @@ namespace Ed_FInsOmron
                     completeStream = "";
                 
                 }
-                streamPackage.Clear();
+                //streamPackage.Clear();
             };
 
             timer.Enabled = true;
