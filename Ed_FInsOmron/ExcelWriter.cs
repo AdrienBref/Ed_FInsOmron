@@ -6,7 +6,7 @@ namespace Ed_FInsOmron.Excel
 {
     public interface IExcelManager
     {
-        void WriteData(string sheetName, int row, int col,int numCol, string[] value);
+        void WriteData(int row, int col, string value);
     }
 
     public class ExcelManager : IExcelManager
@@ -24,17 +24,22 @@ namespace Ed_FInsOmron.Excel
             }
         }
 
-        public void WriteData(string sheetName, int row, int col, int numCol, string[] value)
+
+        /// <summary>
+        /// Set Cell Value with the Row and col cordenates
+        /// </summary>
+        /// <param name="row">integer that give the value of the row.</param>
+        /// <param name="col">integer that give the value of the row</param>
+        /// <param name="value">String with the value towrite</param>
+        public void WriteData(int row, int col, string value)
         {
-            ISheet sheet = _workbook.GetSheet(sheetName);
+            ISheet sheet = _workbook.GetSheetAt(0);
             ICell cell;
 
             IRow excelRow = sheet.GetRow(row) ?? sheet.CreateRow(row);
-            for(int i = col, j = 0; i < numCol; i++, j++)
-            {
-                cell = excelRow.GetCell(i) ?? excelRow.CreateCell(i);
-                cell.SetCellValue(value[j]);
-            }
+            cell = excelRow.GetCell(col) ?? excelRow.CreateCell(col);
+            cell.SetCellValue(value);
+            
 
             using (FileStream file = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {

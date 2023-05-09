@@ -6,6 +6,7 @@ using CableRobot.Fins;
 using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 using Ed_FInsOmron.Excel;
+using System.Collections;
 
 namespace Ed_FInsOmron
 {
@@ -19,8 +20,6 @@ namespace Ed_FInsOmron
 
             conPlc1.connect();
             conPlc2.connect();
-
-
 
             String sendedDatRouteLogAlb1 = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/SendedDataAlb1.txt";
             String sendedDatRouteLogAlb2 = "C:/code/github.com/AdrienBref/Ed_FinsOmron/Ed_FInsOmron/resources/SendedDataAlb2.txt";
@@ -45,7 +44,7 @@ namespace Ed_FInsOmron
             UInt16[] dataWorkCh2 = new UInt16[30];
             UInt16[] dataWorkCh3 = new UInt16[30];
             UInt16[] dataWorkCh4 = new UInt16[30];
-            String[] streamPackage = new String[4];
+
             ushort[] clean = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             String completeStream = "";
             String bulto = "";
@@ -53,6 +52,8 @@ namespace Ed_FInsOmron
             String hojasTotales = "";
             String numeroMaquina = "";
             String resultadoLectura = "";
+
+            ArrayList streamPackage = new ArrayList();
 
             String dataSended = "";
             String dataReceived = "";
@@ -85,12 +86,38 @@ namespace Ed_FInsOmron
                             completeStream = completeStream + dataSended[i];
                         }
                     }
+
+                    for (int i = 0; i < completeStream.Length; i++)
+                    {
+                        if (i < 17)
+                        {
+                            bulto = bulto + completeStream[i];
+                            streamPackage.Add(bulto);
+                        }
+                        else if (i == 18 && i < 20)
+                        {
+                            resultadoLectura = resultadoLectura + completeStream[i];
+                            streamPackage.Add(resultadoLectura);
+                        }
+                    }
+
                     Console.WriteLine("Data Enviada: " + dataSended);
                     Console.WriteLine("Cubeta Enviada por Sunt: " + completeStream);
+
                     using (StreamWriter writer = File.AppendText(sendedDatRouteLogAlb1))
                     {
                         writer.WriteLine("[LOG]>> [" + horaActual +"] Trama enviada desde el Plc Albaranadora 1: " + dataSended);
                     }
+
+                    int j = 6;
+                    foreach (string stream in streamPackage)
+                    {
+                        excelManager.WriteData(filaTabla1, j + 1, stream);
+                    }
+
+                    filaTabla2++;
+
+
                     dataSended = "";
                     completeStream = "";
                 } 
@@ -115,54 +142,44 @@ namespace Ed_FInsOmron
                         if(i < 18)
                         {
                             bulto = bulto + completeStream[i];
-                            streamPackage[0] = bulto;
+                            streamPackage.Add(bulto);
                         } else if (i == 19 && i < 20)
                         {
                             hojasALeer = hojasALeer + completeStream[i];
-                            streamPackage[1] = hojasALeer;
-                       
+                            streamPackage.Add(hojasALeer);
+
                         } else if (i == 21 && i < 22)
                         {
                             hojasTotales = hojasTotales + completeStream[i];
-                            streamPackage[2] = hojasALeer;
+                            streamPackage.Add(hojasTotales);
                         }
                         else if (i == 23 && i < 24)
                         {
                             numeroMaquina = numeroMaquina + completeStream[i];
-                            streamPackage[3] = numeroMaquina;
+                            streamPackage.Add(numeroMaquina);
 
                         } 
                     }
+
+                    streamPackage.Add(completeStream);
 
                     Console.WriteLine("Bulto: " + bulto);
                     Console.WriteLine("Hojas a leer: " + hojasALeer);
                     Console.WriteLine("Hojas totales: " + hojasTotales);
                     Console.WriteLine("Numero máquina: " + numeroMaquina);
 
-                    
-                    IRow row = sheet.GetRow(filaTabla1) ?? sheet.CreateRow(filaTabla1);
-                    ICell codigoCajaCell = row.GetCell(1) ?? row.CreateCell(1);
-                    ICell hojasTotalesCell= row.GetCell(2) ?? row.CreateCell(2);
-                    ICell hojasALeerCell = row.GetCell(3) ?? row.CreateCell(3);
-                    ICell numMaqCell= row.GetCell(4) ?? row.CreateCell(4);
-                    ICell tramaOriginalC= row.GetCell(5) ?? row.CreateCell(5);
-
-                    codigoCajaCell.SetCellValue(bulto);
-                    hojasTotalesCell.SetCellValue(hojasTotales);
-                    hojasALeerCell.SetCellValue(hojasALeer);
-                    numMaqCell.SetCellValue(numeroMaquina);
-                    tramaOriginalC.SetCellValue(completeStream);
-
-                    using (FileStream file = new FileStream(loggingNormon, FileMode.Create, FileAccess.Write))
-                    {
-                        LogNormon.Write(file);
-                        filaTabla1++;
+                    int j = 0;
+                    foreach (string stream in streamPackage) {
+                        excelManager.WriteData(filaTabla1, j + 1, stream);
                     }
+
+                    filaTabla1++;
 
                     using (StreamWriter writer = File.AppendText(receivedDatRouteLog))
                     {
                         writer.WriteLine("[LOG]>> [" + horaActual +"] Trama recibida al plc: " + dataReceived);
                     }
+
                     Console.WriteLine("Data Recibida: " + dataReceived);
                     Console.WriteLine("Cubeta Enviada por Cofares: " + completeStream);
                     dataReceived = "";
@@ -198,9 +215,11 @@ namespace Ed_FInsOmron
                         if(i < 17)
                         {
                             bulto = bulto + completeStream[i];
+                            streamPackage.Add(bulto);
                         } else if (i == 18 && i < 20)
                         {
                             resultadoLectura = resultadoLectura + completeStream[i];
+                            streamPackage.Add(resultadoLectura);
                         }
                     }
 
@@ -208,20 +227,13 @@ namespace Ed_FInsOmron
                     Console.WriteLine("Resultado Lectura: " + resultadoLectura);
 
 
-                    IRow row = sheet.GetRow(filaTabla2) ?? sheet.CreateRow(filaTabla2);
-                    ICell codigoCajaCell = row.GetCell(8) ?? row.CreateCell(8);
-                    ICell resultadoLecturaCell= row.GetCell(9) ?? row.CreateCell(9);
-                    ICell tramaOriginalC= row.GetCell(10) ?? row.CreateCell(10);
-
-                    codigoCajaCell.SetCellValue(bulto);
-                    resultadoLecturaCell.SetCellValue(resultadoLectura);
-                    tramaOriginalC.SetCellValue(dataSended);
-
-                    using (FileStream file = new FileStream(loggingNormon, FileMode.Create, FileAccess.Write))
+                    int j = 12;
+                    foreach (string stream in streamPackage)
                     {
-                        LogNormon.Write(file);
-                        filaTabla2++;
+                        excelManager.WriteData(filaTabla1, j + 1, stream);
                     }
+
+                    filaTabla3++;
 
                     using (StreamWriter writer = File.AppendText(sendedDatRouteLogAlb2))
                     {
@@ -256,7 +268,9 @@ namespace Ed_FInsOmron
                     Console.WriteLine("Cubeta Enviada por Cofares: " + completeStream);
                     dataReceived = "";
                     completeStream = "";
+                
                 }
+                streamPackage.Clear();
             };
 
             timer.Enabled = true;
